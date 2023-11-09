@@ -10,7 +10,7 @@
 //         url: 'https://clipground.com/images/italy-flag-png-7.png',
 //         creatore: {
 //             nome: 'pippo',
-//             età: 92,
+//             età: 87,
 //             sesso: 'm',
 //             pantaloni: {
 //                 marca: 'levis',
@@ -111,105 +111,84 @@
 // // ---- Exercise 3 ----
 
 
-// const italy = {
-//     nome: 'Repubblica Italiana',
-//     bandiera: {
-//         colori: ['rosso', 'bianco', 'verde'],
-//         stileStrisce: 'verticale',
-//         aspectRatio: 16/9,
-//         url: 'https://clipground.com/images/italy-flag-png-7.png',
-//         creatore: {
-//             nome: 'pippo',
-//             età: 92,
-//             sesso: 'm',
-//             pantaloni: {
-//                 marca: 'levis',
-//                 taglia: 'l',
-//             }
-//         }
-//     },
-//     currency: 'euro',
-//     popolazione: 50000000,
-//     lingua: 'italiano',
-//     famousFor: 'food',
-//     urlMappa: 'https://ontheworldmap.com/italy/map-of-italy.jpg',
-//     primoMinistro: {
-//         nome:'Giorgia',
-//         sesso: 'f',
-//         età: 46,
-//     }
-// };
+const italy = {
+    nome: 'Repubblica Italiana',
+    bandiera: {
+        colori: ['rosso', 'bianco', 'verde'],
+        stileStrisce: 'verticale',
+        aspectRatio: 16/9,
+        url: 'https://clipground.com/images/italy-flag-png-7.png',
+        creatore: {
+            nome: 'pippo',
+            età: 87,
+            sesso: 'm',
+            pantaloni: {
+                marca: 'levis',
+                taglia: 'l',
+                lunghezza: 60,
+            },
+        },
+    },
+    currency: 'euro',
+    popolazione: 50000000,
+    lingua: 'italiano',
+    famousFor: 'food',
+    urlMappa: 'https://ontheworldmap.com/italy/map-of-italy.jpg',
+    primoMinistro: {
+        nome:'Giorgia',
+        sesso: 'f',
+        età: 46,
+    }
+}
 
-// window.addEventListener ('load', () => {
+const objToHtml = (obj) => {
 
-//     let body = document.body;
+    const isArray = Array.isArray(obj);
 
-//     body.innerHTML = ``;
+    const type = isArray ? 'ol' : 'ul';
 
-//     const objToHtml = (obj) => {
+    const list = document.createElement(type);
 
-//         const entries = Object.entries(obj);
+    const keys = Object.keys(obj);
 
-//         if ((typeof obj) === 'object' && !(Array.isArray(obj))) {
+    for (let i = 0; i < keys.length; i ++) {
 
-//             body.innerHTML += `<ul>`;
+        const key = keys[i];
 
-//             for (i = 0; i < entries.length; i ++) {
+        const value = obj[key];
 
-//                 const entry = entries[i];
+        const li = document.createElement('li');
 
-//                 const key = entry[0];
+        li.innerHTML = isArray? '' : `${key}:`;
 
-//                 const value = entry[1];            
+        if (typeof value !== 'object') {
 
-//                 if (typeof value === 'object') {
+            li.innerHTML += value;
+        }
 
-//                     body.innerHTML += `<li>${key}:</li>`;                    
+        else {
 
-//                     objToHtml(value);
-//                 } 
+            const list = objToHtml(value);
 
-//                 else {
+            li.appendChild(list);
 
-//                     body.innerHTML += `<li>${key}: ${value}</li>`;
-//                 }   
-//             }
+        }
 
-//             body.innerHTML += `</ul>`;
-//         }
+        list.appendChild(li);
+    }
 
-//         else if (Array.isArray(obj)) {
+    return list;
+}
 
-//             body.innerHTML += `<ol>`;
+window.addEventListener ('load', () => {
 
-//             for (i = 0; i < entries.length; i ++) {
+    const body = document.body;
 
-//                 const e = entries[i];
+    const listObj = objToHtml(italy);
 
-//                 const k = e[0];
+    body.appendChild(listObj);
 
-//                 const v = e[1];            
-
-//                 if ((typeof v) === 'object') {
-
-//                     body.innerHTML += `<li>${k}:</li>`;                    
-
-//                     objToHtml(v);
-//                 }
-
-//                 else {
-
-//                     body.innerHTML += `<li>${k}: ${v}</li>`;
-//                 } 
-//             }
-
-//             body.innerHTML += `</ol>`;            
-//         }
-//     }
-// })
-
-
-
+ })
 
 
 
